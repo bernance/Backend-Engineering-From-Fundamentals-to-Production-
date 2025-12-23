@@ -31,11 +31,11 @@ This project focuses on clean structure, proper ORM usage, and request/response 
 ## Setup Instructions
 
 - ### Clone the repository
-    git clone https://github.com/bernance/Backend-Engineering-From-Fundamentals-to-Production-.git
+    git clone https://github.com/bernance/Backend-Engineering-From-Fundamentals-to-Production-.git  
     cd Personal Knowledge Vaults
   
 - ### Create an activate vitrual environment
-    python -m venv venv
+    python -m venv venv  
     source venv/bin/activate
 
 - ### Install dependencies
@@ -75,7 +75,7 @@ This project was built to practice:
 This is a learning project, built as part of my journey into backend and machine learning engineering. Best practices will be implemented progressively as I advance.
 
 ## Author
-  Worthy Bernard
+  Worthy Bernard  
   Backend Developer | Junior ML Engineer
 
 
