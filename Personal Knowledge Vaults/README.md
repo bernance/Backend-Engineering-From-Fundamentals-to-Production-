@@ -14,10 +14,10 @@ This project focuses on clean structure, proper ORM usage, and request/response 
 
 ## Project Structure
 .
-├── database.py      # Database connection and session management
-├── models.py        # SQLAlchemy ORM models
-├── schemas.py       # Pydantic request and response schemas
-└── main.py          # FastAPI app and routes
+├─ database.py      # Database connection and session management  
+├─ models.py        # SQLAlchemy ORM models  
+├─ schemas.py       # Pydantic request and response schemas  
+└─ main.py          # FastAPI app and routes  
 
 ## Features
 
