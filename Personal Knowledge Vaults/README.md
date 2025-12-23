@@ -13,11 +13,11 @@ This project focuses on clean structure, proper ORM usage, and request/response 
 - Pydantic v2
 
 ## Project Structure
+.
 ├── database.py      # Database connection and session management
 ├── models.py        # SQLAlchemy ORM models
 ├── schemas.py       # Pydantic request and response schemas
-├── main.py          # FastAPI app and routes
-
+└── main.py          # FastAPI app and routes
 
 ## Features
 
@@ -30,8 +30,8 @@ This project focuses on clean structure, proper ORM usage, and request/response 
 ## Setup Instructions
 
 - ### Clone the repository
-    git clone https://github.com/your-username/knowledge-vault-api.git
-    cd knowledge-vault-api
+    git clone https://github.com/bernance/Backend-Engineering-From-Fundamentals-to-Production-.git
+    cd Personal Knowledge Vaults
   
 - ### Create an activate vitrual environment
     python -m venv venv
