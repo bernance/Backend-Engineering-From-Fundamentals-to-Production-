@@ -1,58 +1,19 @@
 from fastapi import FastAPI, Depends, status, HTTPException,Response
-import schemas, models
+import schemas, models, utils
 from database import *
 from typing import List
-
+from routers import notes, users, auth
 
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
 
 
 
-#Created a note
-@app.post("/notes", response_model=schemas.NoteResponse)
-def create_note(note: schemas.CreateNote, db: Session = Depends(get_db)):
-    new_note = models.KnowledgeVault(**note.dict())
-    db.add(new_note)
-    db.commit()
-    db.refresh(new_note)
-    return new_note
 
 
-#Get all notes
-@app.get("/notes", response_model=List[schemas.NoteResponse])
-def get_all_notes(db: Session = Depends(get_db)):
-    notes = db.query(models.KnowledgeVault).all()
-    return notes
 
 
-#Get a single note
+app.include_router(notes.router)
+app.include_router(users.router)
+app.include_router(auth.router)
 
-@app.get("/notes/{id}", response_model=schemas.NoteResponse)
-def get_single_note(id: int, db: Session = Depends(get_db)):
-    note = db.query(models.KnowledgeVault).filter(models.KnowledgeVault.id == id).first()
-
-    if not note:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Note with id {id} not found")
-    return note
-
-#Delete note
-@app.delete("/notes/{id}")
-def delete_note(id: int, db: Session = Depends(get_db)):
-    notes = db.query(models.KnowledgeVault).filter(models.KnowledgeVault.id == id)
-
-    if notes.first() == None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Note with id {id} not found")
-    notes.delete(synchronize_session=False)
-    db.commit()
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
-
-#Updating a note
-@app.put("/notes/{id}", response_model=schemas.NoteResponse)
-def update_note(id: int, note: schemas.UpdateNote, db: Session = Depends(get_db)):
-    updated_note = db.query(models.KnowledgeVault).filter(models.KnowledgeVault.id == id)
-    if updated_note.first() == None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Note with id {id} not found")
-    updated_note.update(note.dict(), synchronize_session=False)
-    db.commit()
-    return updated_note.first()
