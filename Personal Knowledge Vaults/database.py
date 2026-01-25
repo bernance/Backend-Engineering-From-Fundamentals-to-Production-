@@ -5,7 +5,7 @@ from typing import Generator
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base, Session
 
-DATABASE_URL = "postgresql+psycopg://<username>:<password>@<hostname>/<dbname>"
+DATABASE_URL = "postgresql+psycopg://postgres:Bernardworthy12@localhost/postgres"
 
 engine = create_engine(
     DATABASE_URL,

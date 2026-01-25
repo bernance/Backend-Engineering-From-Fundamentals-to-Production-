@@ -1,5 +1,5 @@
 from fastapi import Depends, status, HTTPException,Response, APIRouter
-import schemas, models
+import schemas, models, oauth2
 from database import *
 from typing import List
 
@@ -9,9 +9,9 @@ router = APIRouter(
 )
 
 
-#Created a note
+#Create a note
 @router.post("/", response_model=schemas.NoteResponse)
-def create_note(note: schemas.CreateNote, db: Session = Depends(get_db)):
+def create_note(note: schemas.CreateNote, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
     new_note = models.KnowledgeVault(**note.dict())
     db.add(new_note)
     db.commit()
@@ -29,7 +29,7 @@ def get_all_notes(db: Session = Depends(get_db)):
 #Get a single note
 
 @router.get("/{id}", response_model=schemas.NoteResponse)
-def get_single_note(id: int, db: Session = Depends(get_db)):
+def get_single_note(id: int, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
     note = db.query(models.KnowledgeVault).filter(models.KnowledgeVault.id == id).first()
 
     if not note:
@@ -38,7 +38,7 @@ def get_single_note(id: int, db: Session = Depends(get_db)):
 
 #Delete note
 @router.delete("/{id}")
-def delete_note(id: int, db: Session = Depends(get_db)):
+def delete_note(id: int, db: Session = Depends(get_db), current_user:int = Depends(oauth2.get_current_user)):
     notes = db.query(models.KnowledgeVault).filter(models.KnowledgeVault.id == id)
 
     if notes.first() == None:
@@ -49,7 +49,7 @@ def delete_note(id: int, db: Session = Depends(get_db)):
 
 #Updating a note
 @router.put("/{id}", response_model=schemas.NoteResponse)
-def update_note(id: int, note: schemas.UpdateNote, db: Session = Depends(get_db)):
+def update_note(id: int, note: schemas.UpdateNote, db: Session = Depends(get_db), current_user = Depends(oauth2.get_current_user)):
     updated_note = db.query(models.KnowledgeVault).filter(models.KnowledgeVault.id == id)
     if updated_note.first() == None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Note with id {id} not found")
