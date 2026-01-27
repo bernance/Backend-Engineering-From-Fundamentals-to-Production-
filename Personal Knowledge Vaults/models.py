@@ -1,5 +1,6 @@
 #This contains our SQLALCHEMY models(Tables)
-from sqlalchemy import Column, Integer, String, Boolean,TIMESTAMP, text
+from sqlalchemy import Column, Integer, String, Boolean,TIMESTAMP, text,ForeignKey
+from sqlalchemy.orm import relationship
 from database import Base
 
 
@@ -13,9 +14,11 @@ class KnowledgeVault(Base):
     title = Column(String, nullable=False)
     content = Column(String, nullable=False)
     category = Column(String, nullable=False)
-    is_archived = Column(Boolean, nullable=False, default=False)
+    is_archived = Column(Boolean, nullable=False, server_default="False")
     created_at = Column(TIMESTAMP(timezone=True),nullable=False, server_default=text('now()'))
+    owner_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     #updated_at = Column(TIMESTAMP(timezone=True),nullable=True, server_default=text('now()'))
+    owner = relationship("Users")
 
 
 

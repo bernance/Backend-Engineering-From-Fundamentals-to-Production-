@@ -12,23 +12,32 @@ class NoteBase(BaseModel):
     content: str
     category: str
     is_archived: bool=False
+    
 
 class CreateNote(NoteBase):
     pass
-
+# TO get the user details
+class User(BaseModel):
+    email: EmailStr
 
 class NoteResponse(NoteBase):
-    pass
+    #Adding a schema for the foreign key
+    owner_id: int
+    owner: User
 
 
 class UpdateNote(BaseModel):
     title: str
     content: str
     category: str
+    owner_id: int
 
 #============================#
 #Schema validation for User
 #============================#
+
+
+
 class CreateUser(BaseModel):
     email : EmailStr
     password: str
@@ -38,6 +47,7 @@ class UserResponse(BaseModel):
     email : EmailStr
     #password: str
     created_at: datetime
+    
 
     model_config = {
         "from_attributes": True
