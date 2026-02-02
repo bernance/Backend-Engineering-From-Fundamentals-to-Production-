@@ -39,7 +39,7 @@ This project focuses on clean structure, proper ORM usage, and request/response 
     source venv/bin/activate
 
 - ### Install dependencies
-    pip install fastapi uvicorn sqlalchemy psycopg
+    pip install fastapi uvicorn sqlalchemy psycopg python-jose[cryptography] hashlib
   
 - ### Run the application
     uvicorn main:app --reload
